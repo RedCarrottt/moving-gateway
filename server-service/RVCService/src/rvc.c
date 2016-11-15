@@ -5,6 +5,18 @@
 
 #include "rvc.h"
 
+/*
+ *  Position Variables: g_pos, g_pre_pos, g_cur_pos
+ *  Because the position value of RVC resets when mode switches,
+ *  we need to record the previous values and update current value,
+ *  And lastly global position value.
+ */
+
+float g_pos_x, g_pos_y, g_pos_q;		// Global position
+float pre_pos_x, pre_pos_y, pre_pos_q;	// Previous position values
+float cur_pos_x, cur_pos_y, cur_pos_q;	// Current position values
+
+
 /**
 * The following code shows how to register the rvc callback.
 * @code
@@ -88,20 +100,6 @@ void rvc_unregister_callback(){
 }
 * @endcode
 */
-
-
-/*
- *  Position Variables: g_pos, g_pre_pos, g_cur_pos
- *  Because the position value of RVC resets when mode switches,
- *  we need to record the previous values and update current value,
- *  And lastly global position value.
- */
-
-float g_pos_x, g_pos_y, g_pos_q;		// Global position
-float pre_pos_x, pre_pos_y, pre_pos_q;	// Previous position values
-float cur_pos_x, cur_pos_y, cur_pos_q;	// Current position values
-
-
 
 /**
 * The following code shows how to get the rvc info.
@@ -209,7 +207,7 @@ void set_rvc_command(){
  *  This function changes the direction of the RVC.
  *  This function
  */
-void change_direction(int q){
+void change_direction(float q){
 	dlog_print(DLOG_DEBUG, LOG_TAG, "[FUNCTION] change direction function");
 	rvc_mode_type_get_e mode;
 	rvc_get_mode(&mode);
