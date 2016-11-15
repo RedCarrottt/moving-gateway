@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="installedFeatures">
+		<item value="org.eclipse.cdt.gdb:8.8.1.201602051005"/>
+		<item value="org.eclipse.cdt:8.8.1.201602051005"/>
+		<item value="org.eclipse.emf.common:2.11.1.v20160208-0816"/>
+		<item value="org.eclipse.emf.ecore:2.11.2.v20160208-0816"/>
+		<item value="org.eclipse.help:2.1.2.v20160212-1500"/>
+		<item value="org.eclipse.platform:4.5.2.v20160212-1500"/>
+		<item value="org.eclipse.rcp:4.5.2.v20160212-1500"/>
+		<item value="org.tizen.common.feature:2.0.0.201610181849"/>
+		<item value="org.tizen.dynamicanalysis.ide.eplugin.feature:2.1.0.201609201326"/>
+		<item value="org.tizen.dynamicanalysis.ide.web.eplugin.feature:2.1.0.201609201326"/>
+		<item value="org.tizen.efluibuilder.feature:1.0.0.201610191847"/>
+		<item value="org.tizen.nativeappcommon.feature:2.0.0.201609081404"/>
+		<item value="org.tizen.nativecommon.feature:2.0.0.201610141051"/>
+		<item value="org.tizen.profiler.feature:1.0.0.201609211050"/>
+		<item value="org.tizen.unittest.feature:2.0.0.201610121039"/>
+	</list>
+	<section name="CleanDialogSettings">
+		<item value="484" key="DIALOG_WIDTH"/>
+		<item value="true" key="BUILD_ALL"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
+		<item value="448" key="DIALOG_HEIGHT"/>
+		<item value="1678" key="DIALOG_X_ORIGIN"/>
+		<item value="389" key="DIALOG_Y_ORIGIN"/>
+		<item value="true" key="BUILD_NOW"/>
+	</section>
+</section>

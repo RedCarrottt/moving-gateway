@@ -1,0 +1,148 @@
+17:30:24 **** Incremental Build of configuration Debug for project TestRVCService ****
+ninja all 
+[1/2] Building src/rvc.o
+../src/rvc.c:258:25: warning: incompatible pointer types passing 'void (unsigned char, void *)' to parameter of type 'rvc_mode_evt_cb' (aka 'void (*)(rvc_mode_type_get_e, void *)') [-Wincompatible-pointer-types]
+                                rvc_set_mode_evt_cb(__test_mode_evt_callback, NULL);
+                                                    ^~~~~~~~~~~~~~~~~~~~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:530:41: note: passing argument to parameter 'callback' here
+int rvc_set_mode_evt_cb(rvc_mode_evt_cb callback, void* user_data);
+                                        ^
+../src/rvc.c:262:26: warning: incompatible pointer types passing 'void (unsigned char, void *)' to parameter of type 'rvc_error_evt_cb' (aka 'void (*)(rvc_device_error_type_e, void *)') [-Wincompatible-pointer-types]
+                                rvc_set_error_evt_cb(__test_error_evt_callback, NULL);
+                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:550:43: note: passing argument to parameter 'callback' here
+int rvc_set_error_evt_cb(rvc_error_evt_cb callback, void* user_data);
+                                          ^
+../src/rvc.c:282:28: warning: incompatible pointer types passing 'void (unsigned char, void *)' to parameter of type 'rvc_suction_evt_cb' (aka 'void (*)(rvc_suction_state_e, void *)') [-Wincompatible-pointer-types]
+                                rvc_set_suction_evt_cb(__test_suction_evt_callback, NULL);
+                                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:730:47: note: passing argument to parameter 'callback' here
+int rvc_set_suction_evt_cb(rvc_suction_evt_cb callback, void* user_data);
+                                              ^
+../src/rvc.c:428:18: warning: incompatible pointer types passing 'int *' to parameter of type 'rvc_mode_type_get_e *' [-Wincompatible-pointer-types]
+                                rvc_get_mode(&ret_1);
+                                             ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:192:39: note: passing argument to parameter 'mode' here
+int rvc_get_mode(rvc_mode_type_get_e* mode);
+                                      ^
+../src/rvc.c:433:19: warning: incompatible pointer types passing 'int *' to parameter of type 'rvc_device_error_type_e *' [-Wincompatible-pointer-types]
+                                rvc_get_error(&ret_1);
+                                              ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:203:44: note: passing argument to parameter 'error' here
+int rvc_get_error(rvc_device_error_type_e* error);
+                                           ^
+../src/rvc.c:438:27: warning: incompatible pointer types passing 'int *' to parameter of type 'rvc_suction_state_e *' [-Wincompatible-pointer-types]
+                                rvc_get_suction_state(&ret_1);
+                                                      ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:300:48: note: passing argument to parameter 'state' here
+int rvc_get_suction_state(rvc_suction_state_e* state);
+                                               ^
+../src/rvc.c:443:18: warning: incompatible pointer types passing 'int *' to parameter of type 'float *' [-Wincompatible-pointer-types]
+                                rvc_get_pose(&ret_1, &ret_2, &ret_3);
+                                             ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:234:25: note: passing argument to parameter 'pose_x' here
+int rvc_get_pose(float* pose_x, float* pose_y, float* pose_q);
+                        ^
+../src/rvc.c:443:26: warning: incompatible pointer types passing 'int *' to parameter of type 'float *' [-Wincompatible-pointer-types]
+                                rvc_get_pose(&ret_1, &ret_2, &ret_3);
+                                                     ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:234:40: note: passing argument to parameter 'pose_y' here
+int rvc_get_pose(float* pose_x, float* pose_y, float* pose_q);
+                                       ^
+../src/rvc.c:443:34: warning: incompatible pointer types passing 'int *' to parameter of type 'float *' [-Wincompatible-pointer-types]
+                                rvc_get_pose(&ret_1, &ret_2, &ret_3);
+                                                             ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:234:55: note: passing argument to parameter 'pose_q' here
+int rvc_get_pose(float* pose_x, float* pose_y, float* pose_q);
+                                                      ^
+../src/rvc.c:448:19: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_cliff(&ret_1, &ret_2, &ret_3);
+                                              ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:262:34: note: passing argument to parameter 'cliff_left' here
+int rvc_get_cliff(unsigned char* cliff_left, unsigned char* cliff_center, unsigned char* cliff_right);
+                                 ^
+../src/rvc.c:448:27: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_cliff(&ret_1, &ret_2, &ret_3);
+                                                      ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:262:61: note: passing argument to parameter 'cliff_center' here
+int rvc_get_cliff(unsigned char* cliff_left, unsigned char* cliff_center, unsigned char* cliff_right);
+                                                            ^
+../src/rvc.c:448:35: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_cliff(&ret_1, &ret_2, &ret_3);
+                                                              ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:262:90: note: passing argument to parameter 'cliff_right' here
+int rvc_get_cliff(unsigned char* cliff_left, unsigned char* cliff_center, unsigned char* cliff_right);
+                                                                                         ^
+../src/rvc.c:453:18: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_lift(&ret_1, &ret_2);
+                                             ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:276:33: note: passing argument to parameter 'lift_left' here
+int rvc_get_lift(unsigned char* lift_left, unsigned char* lift_right);
+                                ^
+../src/rvc.c:453:26: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_lift(&ret_1, &ret_2);
+                                                     ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:276:59: note: passing argument to parameter 'lift_right' here
+int rvc_get_lift(unsigned char* lift_left, unsigned char* lift_right);
+                                                          ^
+../src/rvc.c:458:20: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_magnet(&ret_1);
+                                               ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:289:35: note: passing argument to parameter 'magnet' here
+int rvc_get_magnet(unsigned char* magnet);
+                                  ^
+../src/rvc.c:463:20: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_bumper(&ret_1, &ret_2);
+                                               ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:248:35: note: passing argument to parameter 'bumper_left' here
+int rvc_get_bumper(unsigned char* bumper_left, unsigned char* bumper_right);
+                                  ^
+../src/rvc.c:463:28: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                rvc_get_bumper(&ret_1, &ret_2);
+                                                       ^~~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:248:63: note: passing argument to parameter 'bumper_right' here
+int rvc_get_bumper(unsigned char* bumper_left, unsigned char* bumper_right);
+                                                              ^
+../src/rvc.c:476:53: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                        rvc_get_reserve(RVC_RESERVE_TYPE_ONCE, &is_on, &hour, &min);
+                                                                                       ^~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:314:91: note: passing argument to parameter 'reserve_hh' here
+int rvc_get_reserve(rvc_reserve_type_e reserve_type, unsigned char* is_on, unsigned char* reserve_hh, unsigned char* reserve_mm);
+                                                                                          ^
+../src/rvc.c:476:60: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                        rvc_get_reserve(RVC_RESERVE_TYPE_ONCE, &is_on, &hour, &min);
+                                                                                              ^~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:314:118: note: passing argument to parameter 'reserve_mm' here
+int rvc_get_reserve(rvc_reserve_type_e reserve_type, unsigned char* is_on, unsigned char* reserve_hh, unsigned char* reserve_mm);
+                                                                                                                     ^
+../src/rvc.c:482:54: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                        rvc_get_reserve(RVC_RESERVE_TYPE_DAILY, &is_on, &hour, &min);
+                                                                                        ^~~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:314:91: note: passing argument to parameter 'reserve_hh' here
+int rvc_get_reserve(rvc_reserve_type_e reserve_type, unsigned char* is_on, unsigned char* reserve_hh, unsigned char* reserve_mm);
+                                                                                          ^
+../src/rvc.c:482:61: warning: incompatible pointer types passing 'int *' to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+                                        rvc_get_reserve(RVC_RESERVE_TYPE_DAILY, &is_on, &hour, &min);
+                                                                                               ^~~~
+/Users/redcarrottt/tizen-studio/tools/smart-build-interface/../../platforms/tizen-3.0/mobile/rootstraps/mobile-3.0-device.core/../mobile-3.0-rvc-device/usr/include/rvc_api.h:314:118: note: passing argument to parameter 'reserve_mm' here
+int rvc_get_reserve(rvc_reserve_type_e reserve_type, unsigned char* is_on, unsigned char* reserve_hh, unsigned char* reserve_mm);
+                                                                                                                     ^
+../src/rvc.c:535:16: warning: format specifies type 'int *' but the argument has type 'short *' [-Wformat]
+                        scanf("%d", &wheel_vel_left);
+                               ~~   ^~~~~~~~~~~~~~~
+                               %hd
+../src/rvc.c:537:16: warning: format specifies type 'float *' but the argument has type 'short *' [-Wformat]
+                        scanf("%f", &wheel_vel_right);
+                               ~~   ^~~~~~~~~~~~~~~~
+                               %hd
+../src/rvc.c:564:32: warning: data argument not used by format string [-Wformat-extra-args]
+                                        printf("timer is over\n", timer);
+                                               ~~~~~~~~~~~~~~~~~  ^
+../src/rvc.c:599:32: warning: data argument not used by format string [-Wformat-extra-args]
+                                        printf("timer is over\n", timer);
+                                               ~~~~~~~~~~~~~~~~~  ^
+25 warnings generated.
+[2/2] Linking service
+
+17:30:27 Build Finished (took 3s.150ms)
+
