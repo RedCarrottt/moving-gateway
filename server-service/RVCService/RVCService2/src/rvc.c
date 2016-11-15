@@ -303,8 +303,7 @@ void *t_function(void* data){
 
 	move_to_xy(-200.0, -200.0);
 	rvc_set_mode(RVC_MODE_SET_PAUSE);
-	move_to_xy(-400.0, -400.0);
-	rvc_set_mode(RVC_MODE_SET_PAUSE);
+
 
 
 }
