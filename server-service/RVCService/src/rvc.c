@@ -18,6 +18,20 @@ float pre_pos_x, pre_pos_y, pre_pos_q;	// Previous position values
 float cur_pos_x, cur_pos_y, cur_pos_q;	// Current position values
 
 
+typedef struct MAP_NODE{
+
+	int visited_flag;
+	int obstacle;
+}Map_Node;
+/*
+ *  Global Map around RVC
+ *  The interval between two point is 20mm.
+ *  (The size of map is 10m each for width and height [-50, 50])
+ *  if the value is 1, that point is inaccessible. (obstacle exists)
+ */
+Map_Node g_map[101][101];
+
+
 /**
 * The following code shows how to register the rvc callback.
 * @code
@@ -206,7 +220,8 @@ void set_rvc_command(){
 
 /*
  *  This function changes the direction of the RVC.
- *  This function
+ *  This function gets direction variable 'q' (radian)
+ *  and sets RVC's direction to q.
  */
 void change_direction(float q){
 	dlog_print(DLOG_DEBUG, LOG_TAG, "[FUNCTION] change direction function");
@@ -247,10 +262,10 @@ void change_direction(float q){
  *  This requires setting direction to the goal and
  *  Moving to the goal avoiding the obstacles.
  */
-int _finish = 0;
+
 void move_to_xy(float x, float y){
 	dlog_print(DLOG_DEBUG, LOG_TAG, "[FUNCTION] move_to_xy function start");
-	_finish = 0;
+	int _finish = 0;
 	while(!_finish){
 		float dir;					// Direction to head to (radian)
 		float slope = (y - g_pos_y)/(x - g_pos_x);
@@ -306,6 +321,41 @@ void *t_function(void* data){
 
 }
 
+
+void initialize(){
+	/*
+	 *  Initialize the position
+	 */
+	// Initialize global position
+	g_pos_x = g_pos_y = g_pos_q = 0.0;
+	// Initialize previous position
+	pre_pos_x = pre_pos_y = pre_pos_q = 0.0;
+	// Initialize current position
+	cur_pos_x = cur_pos_y = cur_pos_q = 0.0;
+
+	int i,j;
+	for(i=0; i<101; i++){
+		for(j=0; j<101; j++){
+
+		}
+	}
+}
+
+
+/*
+ *  This function executes the logic to scan the surrounding.
+ *  Then, it draws the map about the surrounding.
+ */
+void initial_scan(){
+
+	// Go forward until it meets
+	while(there_is_obstacle){
+		rvc_set_control(RVC_CONTROL_DIR_FORWARD);
+	}
+
+}
+
+
 /*
  *  Rotating matrix is
  *  ( cos(*) -sin(*)
@@ -315,6 +365,11 @@ void rotate_value_with_q(float x, float y, float theta, float *out_x, float *out
 	*out_x = x * cos(theta) - y * sin(theta);
 	*out_y = x * sin(theta) + y * cos(theta);
 }
+
+/*
+ * ************ ************Callback functions *****************************
+ */
+
 
 /*
  *  Position changed callback need to record the current position,
@@ -415,17 +470,8 @@ void my_bumper_cb(unsigned char bumper_left, unsigned char bumper_right, void* d
 	static char prev_bump_right = 0;
 
 	if (bumper_left || bumper_right) {
-		_finish = 1;
 		rvc_set_mode(RVC_MODE_SET_PAUSE);
 	}
-	/*
-	//Left bumper event!
-	if (prev_bump_left != bumper_left && bumper_left == 1)
-		rvc_set_mode(RVC_MODE_SET_PAUSE);
-	//Right bumper event!
-	else if (prev_bump_right != bumper_right && bumper_right ==1)
-		rvc_set_mode(RVC_MODE_SET_PAUSE);
-		*/
 
 	prev_bump_left = bumper_left;
 	prev_bump_right = bumper_right;
@@ -452,16 +498,10 @@ void my_magnet_cb(unsigned char magnet, void* data){
 	// Todo: add your code here.
 }
 
-void initialize_position(){
-	// Initialize global position
-	g_pos_x = g_pos_y = g_pos_q = 0.0;
 
-	// Initialize previous position
-	pre_pos_x = pre_pos_y = pre_pos_q = 0.0;
-
-	// Initialize current position
-	cur_pos_x = cur_pos_y = cur_pos_q = 0.0;
-}
+/*
+ * **************************************************************
+ */
 
 bool service_app_create(void *data)
 {
@@ -472,7 +512,7 @@ bool service_app_create(void *data)
 
 	// Todo: add your code here.
 	dlog_print(DLOG_DEBUG, LOG_TAG, "Initialize position");
-	initialize_position();
+	initialize();
 
 	rvc_set_suction_state(RVC_SUCTION_SLIENT);
 
