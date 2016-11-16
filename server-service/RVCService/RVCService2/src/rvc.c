@@ -226,7 +226,7 @@ void change_direction(float q){
 	}
 
 	int _switch = 1;
-	float range = 0.1;
+	float range = 0.5;
 	while(_switch){
 		float delta = q - cur_pos_q;
 		if(delta < -range){
@@ -236,6 +236,7 @@ void change_direction(float q){
 			rvc_set_control(RVC_CONTROL_DIR_LEFT);
 		}
 		else {
+			dlog_print(DLOG_DEBUG, LOG_TAG, "direction set complete");
 			_switch = 0;
 		}
 	}
@@ -247,24 +248,23 @@ void change_direction(float q){
  *  This requires setting direction to the goal and
  *  Moving to the goal avoiding the obstacles.
  */
-int _finish = 0;
+static int _finish = 0;
 void move_to_xy(float x, float y){
 	dlog_print(DLOG_DEBUG, LOG_TAG, "[FUNCTION] move_to_xy function start");
-	_finish = 0;
+
 	while(!_finish){
 		float dir;					// Direction to head to (radian)
 		float slope = (y - g_pos_y)/(x - g_pos_x);
 
-		// The range is [-PI/2, PI/2]
+		// The range is -PI/2, PI/2
 		dir = atan(slope);
 
-		// When the range is over [-PI/2, PI/2],
-		// which is the range of input to tangent,
+		// When the range is over tangent
 		if((x - g_pos_x) < 0){
 			dir = dir + M_PI;
 		}
 
-		// Make the direction in the range of [-PI, PI]
+		// Make the direction in the range of -PI, PI
 		if(dir > M_PI){
 			dir -= 2 * M_PI;
 		}
@@ -272,6 +272,8 @@ void move_to_xy(float x, float y){
 			dir += 2 * M_PI;
 		}
 
+
+		dlog_print(DLOG_DEBUG, LOG_TAG, "direction: %f", dir);
 		change_direction(dir);
 		rvc_set_control(RVC_CONTROL_DIR_FORWARD);
 
@@ -285,7 +287,6 @@ void move_to_xy(float x, float y){
 		if( (fabsf(delta_x) < range) && (fabsf(delta_y) < range) ){
 			dlog_print(DLOG_DEBUG, LOG_TAG, "Move to function finished");
 			_finish = 1;
-			rvc_set_mode(RVC_MODE_SET_PAUSE);
 		}
 	}
 
@@ -301,8 +302,9 @@ void *t_function(void* data){
 
 
 	move_to_xy(-200.0, -200.0);
-	move_to_xy(-400.0, -400.0);
-	move_to_xy(-100.0, -200.0);
+	rvc_set_mode(RVC_MODE_SET_PAUSE);
+
+
 
 }
 
@@ -325,19 +327,6 @@ void rotate_value_with_q(float x, float y, float theta, float *out_x, float *out
 void my_pose_changed_cb(float pose_x, float pose_y, float pose_q, void* user_data)
 {
 	dlog_print(DLOG_DEBUG, LOG_TAG, "POSE: %f,%f,%f", pose_x, pose_y, pose_q);
-
-	// When Mode changed from Idle to Manual, record the position value.
-	// (Because, the position value is reset.)
-	// PRE is the value of position before position value reset.
-	// CUR is the value of position after position value changed.
-	// ****** This function should be executed before update "cur_pos" value ********
-	if(pose_x < 5.0 && pose_x > -5.0 && pose_y < 5.0 && pose_y > -5.0 ){
-		float changed_x, changed_y;
-		rotate_value_with_q(cur_pos_x, cur_pos_y, pre_pos_q, &changed_x, &changed_y);
-		pre_pos_x += changed_x;
-		pre_pos_y += changed_y;
-		pre_pos_q += cur_pos_q;
-	}
 
 	// Current position data could be reset. (unstable)
 	// Therefore, we record the current position.
@@ -406,6 +395,16 @@ void my_mode_changed_cb(rvc_mode_type_get_e mode, void* user_data)
 			break;
 	}
 
+	// When Mode changed to Idle, record the position value.
+	// PRE is the value of position before position value reset.
+	// CUR is the value of position after position value changed.
+	if(mode == RVC_MODE_GET_MANUAL){
+		float changed_x, changed_y;
+		rotate_value_with_q(cur_pos_x, cur_pos_y, pre_pos_q, &changed_x, &changed_y);
+		pre_pos_x += changed_x;
+		pre_pos_y += changed_y;
+		pre_pos_q += cur_pos_q;
+	}
 
 
 }
@@ -429,27 +428,6 @@ void my_bumper_cb(unsigned char bumper_left, unsigned char bumper_right, void* d
 
 	prev_bump_left = bumper_left;
 	prev_bump_right = bumper_right;
-}
-
-void my_error_cb(rvc_device_error_type_e error, void* data){
-	dlog_print(DLOG_DEBUG, LOG_TAG, "error event occurred: %d", error);
-}
-
-void my_wheel_cb(signed short wheel_vel_left, signed short wheel_vel_right, void* data){
-	dlog_print(DLOG_DEBUG, LOG_TAG, "wheel callback event occurred!");
-
-}
-
-void my_cliff_cb(unsigned char cliff_left, unsigned char cliff_center, unsigned char cliff_right, void* data){
-	// Todo: add your code here.
-}
-
-void my_lift_cb(unsigned char lift_left, unsigned char lift_right, void* data){
-	// Todo: add your code here.
-}
-
-void my_magnet_cb(unsigned char magnet, void* data){
-	// Todo: add your code here.
 }
 
 void initialize_position(){
@@ -479,11 +457,6 @@ bool service_app_create(void *data)
 	rvc_set_pose_evt_cb(my_pose_changed_cb, NULL);
 	rvc_set_mode_evt_cb(my_mode_changed_cb, NULL);
 	rvc_set_bumper_evt_cb(my_bumper_cb, NULL);
-	rvc_set_error_evt_cb(my_error_cb, NULL);
-	rvc_set_wheel_vel_evt_cb(my_wheel_cb, NULL);
-	rvc_set_cliff_evt_cb(my_cliff_cb, NULL);
-	rvc_set_lift_evt_cb(my_lift_cb, NULL);
-	rvc_set_magnet_evt_cb(my_magnet_cb, NULL);
 
 	// Make pthread
 	pthread_t thread;
