@@ -4,7 +4,7 @@
 <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
 <Reference URI="bin%2Fservice">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
-<DigestValue>e+IlfnihFEJyMMHGnRWo5U2lTcbkkqoZTrPraO6weGg=</DigestValue>
+<DigestValue>muHbQQqE6WGYmxQBGoNNzxH9Kum43bnWhqQv1Lc+98Y=</DigestValue>
 </Reference>
 <Reference URI="shared%2Fres%2Frvc.png">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
@@ -23,9 +23,9 @@
 </Reference>
 </SignedInfo>
 <SignatureValue>
-NK9Kl6RObhFl+sgJznrfF2YTAcr85RvjK5gSLrnqdtWnMfLsnRI/tHoiV5xlGNXUOu2Osb2IxW4r
-zFXn3xIKy2dMtd44EfvvxbUae10d/0uSnLME0ay2NOAUHdAGFgFcYj0CnlpMtYxOn5dgWXZah4t3
-dXuRyl4YcmhhSaWPV3s=
+dc+WRRcXYc7A4IPDC9rNzr1eRRQRJAGBtL/7oesmgPPCNcaGcgHINa3C1B3QpEPGp2VaXWbiZd/C
+qT99bB0yzU2bkHZQT0nlYg8m8KwVS+2n+IrpUJLbdBA+TDB0VNzdBlGFsnQ06Pcsflcqr85IXQmb
+IQnGDb9phWaWb+FowIQ=
 </SignatureValue>
 <KeyInfo>
 <X509Data>
