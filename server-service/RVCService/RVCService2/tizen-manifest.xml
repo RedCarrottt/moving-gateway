@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="org.sample.rvc" version="1.0.0">
-    <profile name="mobile" />
-    <service-application appid="org.sample.rvc" auto-restart="true" exec="service" multiple="false" nodisplay="true" on-boot="true" taskmanage="false" type="capp">
-        <icon>rvc.png</icon>
-        <label>rvc</label>
-	</service-application>
-</manifest>
