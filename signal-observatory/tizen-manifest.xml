@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="skku.eslab.observatoryservice1" version="1.0.0">
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="skku.eslab.observatoryservice2" version="1.0.0">
     <profile name="mobile"/>
-    <service-application appid="skku.eslab.observatoryservice1" auto-restart="true" exec="service" multiple="false" nodisplay="true" on-boot="true" taskmanage="false" type="capp">
-        <label>rvc</label>
+    <service-application appid="skku.eslab.observatoryservice2" auto-restart="false" exec="service" multiple="false" nodisplay="true" on-boot="false" taskmanage="false" type="capp">
+        <label>MGW Observatory</label>
         <icon>rvc.png</icon>
     </service-application>
     <privileges>

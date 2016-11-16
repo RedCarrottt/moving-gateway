@@ -192,7 +192,7 @@
  * @endcode
  */
 
-int bt_discover_if_turned_on(void) {
+int discover_bt_if_turned_on(void) {
 	bt_adapter_state_e adapter_state;
 
 	// Check whether the Bluetooth adapter is enabled
@@ -221,20 +221,20 @@ void adapter_state_changed_cb(int result, bt_adapter_state_e adapter_state,
 		return;
 	}
 	if (adapter_state == BT_ADAPTER_ENABLED) {
-		dlog_print(DLOG_INFO, LOG_TAG,
+		dlog_print(DLOG_DEBUG, LOG_TAG,
 				"[adapter_state_changed_cb] Bluetooth is enabled!");
 
 		/* Get information about Bluetooth adapter */
 		char *local_address = NULL;
 		bt_adapter_get_address(&local_address);
-		dlog_print(DLOG_INFO, LOG_TAG,
+		dlog_print(DLOG_DEBUG, LOG_TAG,
 				"[adapter_state_changed_cb] Adapter address: %s.",
 				local_address);
 		if (local_address)
 			free(local_address);
 		char *local_name;
 		bt_adapter_get_name(&local_name);
-		dlog_print(DLOG_INFO, LOG_TAG,
+		dlog_print(DLOG_DEBUG, LOG_TAG,
 				"[adapter_state_changed_cb] Adapter name: %s.", local_name);
 		if (local_name)
 			free(local_name);
@@ -245,23 +245,23 @@ void adapter_state_changed_cb(int result, bt_adapter_state_e adapter_state,
 		bt_adapter_get_visibility(&mode, &duration);
 		switch (mode) {
 		case BT_ADAPTER_VISIBILITY_MODE_NON_DISCOVERABLE:
-			dlog_print(DLOG_INFO, LOG_TAG,
+			dlog_print(DLOG_DEBUG, LOG_TAG,
 					"[adapter_state_changed_cb] Visibility: NON_DISCOVERABLE");
 			break;
 		case BT_ADAPTER_VISIBILITY_MODE_GENERAL_DISCOVERABLE:
-			dlog_print(DLOG_INFO, LOG_TAG,
+			dlog_print(DLOG_DEBUG, LOG_TAG,
 					"[adapter_state_changed_cb] Visibility: GENERAL_DISCOVERABLE");
 			break;
 		case BT_ADAPTER_VISIBILITY_MODE_LIMITED_DISCOVERABLE:
-			dlog_print(DLOG_INFO, LOG_TAG,
+			dlog_print(DLOG_DEBUG, LOG_TAG,
 					"[adapter_state_changed_cb] Visibility: LIMITED_DISCOVERABLE");
 			break;
 		}
 
 		// If the Bluetooth adapter is enabled, start to discover Bluetooth devices
-		bt_discover_if_turned_on();
+		discover_bt_if_turned_on();
 	} else {
-		dlog_print(DLOG_INFO, LOG_TAG,
+		dlog_print(DLOG_DEBUG, LOG_TAG,
 				"[adapter_state_changed_cb] Bluetooth is disabled!");
 		/*
 		 When you try to get device information
@@ -271,14 +271,14 @@ void adapter_state_changed_cb(int result, bt_adapter_state_e adapter_state,
 	}
 }
 
-void bt_set_state_changed_cb() {
+void set_bt_state_changed_cb() {
 	int ret = bt_adapter_set_state_changed_cb(adapter_state_changed_cb, NULL);
 	if (ret != BT_ERROR_NONE)
 		dlog_print(DLOG_ERROR, LOG_TAG,
 				"[bt_adapter_set_state_changed_cb()] failed.");
 }
 
-int bt_initialize(void) {
+int inititalize_bt(void) {
 	int ret = 0;
 	ret = bt_initialize();
 	if (ret != BT_ERROR_NONE) {
@@ -288,13 +288,13 @@ int bt_initialize(void) {
 	return 0;
 }
 
-int bt_onoff_operation(void) {
+int turn_on_bt(void) {
 	int ret = 0;
 	app_control_h service = NULL;
 
 	app_control_create(&service);
 	if (service == NULL) {
-		dlog_print(DLOG_INFO, LOG_TAG, "service_create failed!\n");
+		dlog_print(DLOG_DEBUG, LOG_TAG, "service_create failed!\n");
 
 		return 0;
 	}
@@ -304,11 +304,11 @@ int bt_onoff_operation(void) {
 
 	app_control_destroy(service);
 	if (ret == APP_CONTROL_ERROR_NONE) {
-		dlog_print(DLOG_INFO, LOG_TAG, "Succeeded to Bluetooth On/Off app!\n");
+		dlog_print(DLOG_DEBUG, LOG_TAG, "Succeeded to Bluetooth On/Off app!\n");
 
 		return 0;
 	} else {
-		dlog_print(DLOG_INFO, LOG_TAG,
+		dlog_print(DLOG_DEBUG, LOG_TAG,
 				"Failed to relaunch Bluetooth On/Off app!\n");
 
 		return -1;
@@ -321,15 +321,15 @@ bool service_app_create(void *data) {
 	if (rvc_initialize() != RVC_USER_ERROR_NONE) {
 		return false;
 	}
-	dlog_print(DLOG_DEBUG, LOG_TAG, "Service launched");
+	dlog_print(DLOG_DEBUG, LOG_TAG, "Service launched!!");
 
-//	// Turn on Bluetooth
-//	bt_initialize();
-//	bt_onoff_operation();
-//	bt_set_state_changed_cb();
-//
-//	// Discover bluetooth adapter if Bluetooth adapter has already enabled
-//	bt_discover_if_turned_on();
+	// Turn on Bluetooth
+	inititalize_bt();
+	turn_on_bt();
+	set_bt_state_changed_cb();
+
+	// Discover bluetooth adapter if Bluetooth adapter has already enabled
+	discover_bt_if_turned_on();
 
 	return true;
 }
