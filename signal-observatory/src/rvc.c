@@ -323,13 +323,13 @@ bool service_app_create(void *data) {
 	}
 	dlog_print(DLOG_DEBUG, LOG_TAG, "Service launched");
 
-	// Turn on Bluetooth
-	bt_initialize();
-	bt_onoff_operation();
-	bt_set_state_changed_cb();
-
-	// Discover bluetooth adapter if Bluetooth adapter has already enabled
-	bt_discover_if_turned_on();
+//	// Turn on Bluetooth
+//	bt_initialize();
+//	bt_onoff_operation();
+//	bt_set_state_changed_cb();
+//
+//	// Discover bluetooth adapter if Bluetooth adapter has already enabled
+//	bt_discover_if_turned_on();
 
 	return true;
 }
