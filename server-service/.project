@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>RVCService2</name>
+	<name>RVCService_Test</name>
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
+		<buildCommand>
+			<name>org.tizen.nativecore.apichecker.apicheckerbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
 			<arguments>
@@ -22,10 +27,11 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+		<nature>org.tizen.nativecore.apichecker.apicheckernature</nature>
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1478854733694</id>
+			<id>1477549809392</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -34,7 +40,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1478854733703</id>
+			<id>1477549809395</id>
 			<name></name>
 			<type>6</type>
 			<matcher>
