@@ -6,6 +6,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <service_app.h>
+#include <json-glib/json-glib.h>
+#include <json-glib/json-gobject.h>
 #include <math.h>
 
 #ifdef  LOG_TAG
