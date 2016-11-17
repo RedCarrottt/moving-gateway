@@ -217,6 +217,14 @@ void moving_thread_run(void *instance) {
             dir = -ESLAB_PI / 2;
          }
       }
+      else if(y == g_pos_y){
+    	  if( (x - g_pos_x) > 0){
+    		  dir = 0.0;
+    	  }
+    	  else{
+    		  dir = ESLAB_PI;
+    	  }
+      }
       else {
          slope = (y - g_pos_y)/(x - g_pos_x);
 
@@ -374,7 +382,7 @@ void my_pose_changed_cb(float pose_x, float pose_y, float pose_q, void* user_dat
       }
       else {
          float changed_x, changed_y;
-         rotate_value_with_q(cur_pos_x, cur_pos_y, -pre_pos_q, &changed_x, &changed_y);
+         rotate_value_with_q(cur_pos_x, cur_pos_y, pre_pos_q, &changed_x, &changed_y);
          pre_pos_x += changed_x;
          pre_pos_y += changed_y;
          pre_pos_q += cur_pos_q;
@@ -393,7 +401,7 @@ void my_pose_changed_cb(float pose_x, float pose_y, float pose_q, void* user_dat
    // Therefore, we need to rotate the position (x,y)
    // with the amount of previous q.
    float changed_x, changed_y;
-   rotate_value_with_q(cur_pos_x, cur_pos_y, -pre_pos_q, &changed_x, &changed_y);
+   rotate_value_with_q(cur_pos_x, cur_pos_y, pre_pos_q, &changed_x, &changed_y);
    g_pos_x = pre_pos_x + changed_x;
    g_pos_y = pre_pos_y + changed_y;
 
@@ -463,6 +471,7 @@ void my_bumper_cb(unsigned char bumper_left, unsigned char bumper_right, void* d
    _rvc_instance_s *instance = (_rvc_instance_s *)data;
    if (bumper_left || bumper_right) {
       stop_moveto(instance);
+
    }
 }
 /**
