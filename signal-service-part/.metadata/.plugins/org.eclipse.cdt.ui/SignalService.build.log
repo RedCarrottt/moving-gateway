@@ -1,0 +1,15 @@
+02:00:54 **** Incremental Build of configuration Debug for project SignalService ****
+ninja all 
+[1/2] Building src/rvc.o
+../src/rvc.cpp:51:40: warning: variable 'p_rssi_thread_status' is uninitialized when used here [-Wuninitialized]
+        pthread_join(p_rssi_thread, (void **) p_rssi_thread_status);
+                                              ^~~~~~~~~~~~~~~~~~~~
+../src/rvc.cpp:50:26: note: initialize the variable 'p_rssi_thread_status' to silence this warning
+        int p_rssi_thread_status;
+                                ^
+                                 = 0
+1 warning generated.
+[2/2] Linking service
+
+02:00:55 Build Finished (took 981ms)
+

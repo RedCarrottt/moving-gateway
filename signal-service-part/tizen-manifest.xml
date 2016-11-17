@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="3.0" package="skku.eslab.signalservice" version="1.0.0">
+    <profile name="mobile"/>
+    <service-application appid="skku.eslab.signalservice" auto-restart="false" exec="service" multiple="false" nodisplay="true" on-boot="false" taskmanage="false" type="capp">
+        <label>rvc</label>
+        <icon>rvc.png</icon>
+    </service-application>
+</manifest>

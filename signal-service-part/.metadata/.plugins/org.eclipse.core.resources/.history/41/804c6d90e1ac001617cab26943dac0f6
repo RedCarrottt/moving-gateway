@@ -1,0 +1,8 @@
+/*
+ * rssi.h
+ *
+ *  Created on: Nov 18, 2016
+ *      Author: RedCarrottt
+ */
+void update_max_rssi(float x, float y);
+int get_pos(int bulb_num, float* ret_px, float* ret_py);

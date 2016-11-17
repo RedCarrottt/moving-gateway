@@ -1,0 +1,48 @@
+/* RedCarrottt Start */
+#include <cstring>
+#include <sstream>
+
+#include "rvc.h"
+
+#define NUM_BULBS 3
+float max_pos_x[NUM_BULBS] = { 0, 0, 0 };
+float max_pos_y[NUM_BULBS] = { 0, 0, 0 };
+
+using namespace std;
+
+void get_rssi(int[] rssis) {
+
+}
+
+void update_max_rssi(float x, float y) {
+	string url("http://192.168.0.18");
+	HttpRequest *http_request = NULL;
+	string buffer;
+
+	http_request = HttpRequest::getInstance();
+	if (CURLE_OK == http_request->get(url)) {
+		buffer = http_request->getResultStr();
+		dlog_print(DLOG_INFO, TAG_LOG, buffer.c_str());
+		parse_get_json_cmd(buffer, tmp_hue);
+	} else {
+		delete tmp_hue;
+		tmp_hue = NULL;
+	}
+}
+
+int get_pos(int bulb_num, float* px, float* py) {
+	if (px == NULL || py == NULL)
+		dlog_print(DLOG_ERROR, TAG_LOG, "incorrect position pointer: %p %p", px,
+				py);
+	return -1;
+	if (buib_num < 0 || bulb_num >= NUM_BULBS) {
+		dlog_print(DLOG_ERROR, TAG_LOG, "incorrect bulb_numt: %d", bulb_num);
+		return -2;
+	}
+
+	*px = max_pos_x[bulb_num]
+
+	return 0;
+}
+
+/* RedCarrottt End */

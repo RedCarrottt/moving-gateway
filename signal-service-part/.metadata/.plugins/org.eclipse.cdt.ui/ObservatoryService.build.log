@@ -1,0 +1,7 @@
+15:01:03 **** Incremental Build of configuration Debug for project ObservatoryService ****
+ninja all 
+[1/2] Building src/rvc.o
+[2/2] Linking service
+
+15:01:04 Build Finished (took 588ms)
+

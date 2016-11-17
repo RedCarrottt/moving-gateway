@@ -1,0 +1,34 @@
+/* RedCarrottt Start */
+#include <cstring>
+#include <sstream>
+
+#include "rvc.h"
+
+#define NUM_BULBS 3
+float max_pos_x[NUM_BULBS] = { 0, 0, 0 };
+float max_pos_y[NUM_BULBS] = { 0, 0, 0 };
+
+using namespace std;
+
+
+void update_max_rssi(float x, float y) {
+
+}
+
+int get_pos(int bulb_num, float* ret_px, float* ret_py) {
+	if (ret_px == NULL || ret_py == NULL)
+		dlog_print(DLOG_ERROR, TAG_LOG, "incorrect position pointer: %p %p", px,
+				py);
+	return -1;
+	if (buib_num < 0 || bulb_num >= NUM_BULBS) {
+		dlog_print(DLOG_ERROR, TAG_LOG, "incorrect bulb_numt: %d", bulb_num);
+		return -2;
+	}
+
+	*ret_px = max_pos_x[bulb_num];
+	*ret_py = max_pos_y[bulb_num];
+
+	return 0;
+}
+
+/* RedCarrottt End */
