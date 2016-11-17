@@ -1,11 +1,22 @@
 # performs a simple device inquiry, followed by a remote name request of each
 # discovered device
 
+import thread, time
+from multiprocessing import Process, Value, Array
+from multiprocessing import Queue
+
+from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+from ctypes import c_char_p
+
 import os
 import sys
 import struct
 import bluetooth._bluetooth as bluez
 import bluetooth
+
+macs = ["00:15:83:CE:4B:D8", "00:15:83:CE:4C:D0", "AC:36:13:51:FF:64"]
+rssis = [-100, -100, -100]
+val = Value(c_char_p, str(rssis[0]) + ' ' + str(rssis[1]) + ' ' + str(rssis[2]))
 
 def printpacket(pkt):
     for c in pkt:
@@ -102,6 +113,12 @@ def device_inquiry_with_with_rssi(sock):
                         bluetooth.get_byte(pkt[1+13*nrsp+i]))
                 results.append( ( addr, rssi ) )
                 print("[%s] RSSI: [%d]" % (addr, rssi))
+                j = 0
+                for mac in macs:
+                    if mac == addr:
+                        rssis[j] = rssi
+                    j = j + 1
+                        
         elif event == bluez.EVT_INQUIRY_COMPLETE:
             done = True
         elif event == bluez.EVT_CMD_STATUS:
@@ -119,7 +136,9 @@ def device_inquiry_with_with_rssi(sock):
                 print("[%s] (no RRSI)" % addr)
         else:
             print("unrecognized packet type 0x%02x" % ptype)
-				print("event ", event)
+        mystr = str(rssis[0]) + ' ' + str(rssis[1]) + ' ' + str(rssis[2])
+        val.value = mystr
+        # print("event ", event)
 
 
     # restore old filter
@@ -127,33 +146,48 @@ def device_inquiry_with_with_rssi(sock):
 
     return results
 
-dev_id = 0
-try:
-    sock = bluez.hci_open_dev(dev_id)
-except:
-    print("error accessing bluetooth device...")
-    sys.exit(1)
-
-while True:
+def bluetooth_discover(val):
+    dev_id = 0
     try:
-        mode = read_inquiry_mode(sock)
-    except Exception as e:
-        print("error reading inquiry mode.  ")
-        print("Are you sure this a bluetooth 1.2 device?")
-        print(e)
+        sock = bluez.hci_open_dev(dev_id)
+    except:
+        print("error accessing bluetooth device...")
         sys.exit(1)
-    print("current inquiry mode is %d" % mode)
     
-    if mode != 1:
-        print("writing inquiry mode...")
+    while True:
         try:
-            result = write_inquiry_mode(sock, 1)
+            mode = read_inquiry_mode(sock)
         except Exception as e:
-            print("error writing inquiry mode.  Are you sure you're root?")
+            print("error reading inquiry mode.  ")
+            print("Are you sure this a bluetooth 1.2 device?")
             print(e)
             sys.exit(1)
-        if result != 0:
-            print("error while setting inquiry mode")
-        print("result: %d" % result)
-    
-    device_inquiry_with_with_rssi(sock)
+        print("current inquiry mode is %d" % mode)
+        
+        if mode != 1:
+            print("writing inquiry mode...")
+            try:
+                result = write_inquiry_mode(sock, 1)
+            except Exception as e:
+                print("error writing inquiry mode.  Are you sure you're root?")
+                print(e)
+                sys.exit(1)
+            if result != 0:
+                print("error while setting inquiry mode")
+            print("result: %d" % result)
+        
+        device_inquiry_with_with_rssi(sock)
+
+class MyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.wfile.write("" + val.value)
+
+if __name__ == '__main__':
+    # Spawn child thread
+    thread.start_new_thread(bluetooth_discover, (val, ))
+
+    # Make a HTTP server
+    server = HTTPServer(('',8888), MyHandler)
+    print "Started WebServer on port 8888..."
+    print "Press ^C to quit webserver"
+    server.serve_forever()
