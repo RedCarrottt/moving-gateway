@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="Bulb ##"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32dp"
+        android:id="@+id/bulb_text_view"
+        android:layout_gravity="center_vertical"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/turn_on_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:background="@android:color/holo_blue_bright"
+            android:text="Turn ON"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/turn_off_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:background="@android:color/holo_blue_dark"
+            android:text="Turn OFF"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/change_color_white_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:background="#ffffff"
+            android:text="WHITE"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/change_color_red_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:background="#ff0000"
+            android:text="RED"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/change_color_green_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:background="#00ff00"
+            android:text="GREEN"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/change_color_blue_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:background="#0000ff"
+            android:text="BLUE"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</LinearLayout>
