@@ -3,6 +3,7 @@ package kr.ac.skku.nyx.movinggateway;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +14,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener{
+/* RedCarrottt */
+public class MainActivity extends AppCompatActivity implements OnClickListener,
+        OnBulbTouchedListener, BulbDialogFragmentListener {
+    /***************/
     final int UPDATE_SCREEN = 1;
     MovingGateway mMovingGateway = null;
     Handler mHandler = null;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     }
 
     public void initialize() {
-        mHandler = new Handler () {
+        mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                switch(msg.what){
+                switch (msg.what) {
                     case UPDATE_SCREEN:
                         updateScreen();
                         break;
@@ -64,23 +69,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             }
         });
 
-        Button scan_btn = (Button)findViewById(R.id.scan_btn);
+        Button scan_btn = (Button) findViewById(R.id.scan_btn);
         scan_btn.setOnClickListener(this);
 
-        Button left_btn = (Button)findViewById(R.id.left_btn);
+        Button left_btn = (Button) findViewById(R.id.left_btn);
         left_btn.setOnClickListener(this);
 
-        Button right_btn = (Button)findViewById(R.id.right_btn);
+        Button right_btn = (Button) findViewById(R.id.right_btn);
         right_btn.setOnClickListener(this);
 
-        Button mv_btn = (Button)findViewById(R.id.mv_btn);
+        Button mv_btn = (Button) findViewById(R.id.mv_btn);
         mv_btn.setOnClickListener(this);
 
-        Button stop_btn = (Button)findViewById(R.id.stop_btn);
+        Button stop_btn = (Button) findViewById(R.id.stop_btn);
         stop_btn.setOnClickListener(this);
 
         Button connect_btn = (Button) findViewById(R.id.connect_btn);
         connect_btn.setOnClickListener(this);
+
+        /* RedCarrottt */
+        RVCSurfaceView rvcSurfaceView = (RVCSurfaceView) findViewById(R.id.rvc_surface_view);
+        rvcSurfaceView.setListener(this);
+        /***************/
     }
 
     public void updateScreen() {
@@ -109,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             connect_btn.setText("Connect");
 
         TextView tv_position = (TextView) findViewById(R.id.text_view_pos_val);
-        String pos = "( " + Integer.toString((int)mMovingGateway.pos.x) + ", " + Integer.toString((int)mMovingGateway.pos.y) + " )";
+        String pos = "( " + Integer.toString((int) mMovingGateway.pos.x) + ", " + Integer.toString((int) mMovingGateway.pos.y) + " )";
         tv_position.setText(pos);
 
     }
@@ -119,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         if (mMovingGateway == null)
             return;
 
-        String cmd = (String)v.getTag();
+        String cmd = (String) v.getTag();
         switch (v.getId()) {
             case R.id.left_btn:
                 startActivity(new Intent(MainActivity.this, MapView.class));
@@ -136,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                 break;
             case R.id.mv_btn:
                 cmd = String.format(cmd,
-                        ((EditText)findViewById(R.id.edit_text_x_val)).getText().toString(),
-                        ((EditText)findViewById(R.id.edit_text_y_val)).getText().toString());
+                        ((EditText) findViewById(R.id.edit_text_x_val)).getText().toString(),
+                        ((EditText) findViewById(R.id.edit_text_y_val)).getText().toString());
                 mMovingGateway.sendCommand(cmd);
 
                 break;
@@ -147,19 +157,70 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
                 break;
             case R.id.connect_btn:
                 EditText et_ip = (EditText) findViewById(R.id.edit_text_ip);
-                if(mMovingGateway.isConnected() == false) {
+                if (mMovingGateway.isConnected() == false) {
                     if (et_ip.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Fill out IP", Toast.LENGTH_SHORT).show();
                     } else {
                         et_ip.setEnabled(false);
                         mMovingGateway.connectServer(et_ip.getText().toString());
                     }
-                }else{
+                } else {
                     mMovingGateway.disconnectServer();
                 }
         }
 
     }
 
+    private int mPresentBulbNum = 0;
+    private boolean mDialogEnabled = false;
 
+    /* RedCarrottt */
+    @Override
+    public void onBulbTouched(int bulb_num) {
+        if(this.mDialogEnabled == true)
+            return;
+
+        this.mPresentBulbNum = bulb_num;
+        BulbDialogFragment dialogFragment = new BulbDialogFragment();
+        dialogFragment.setListener(this);
+        dialogFragment.setBulbNum(bulb_num);
+        dialogFragment.show(getFragmentManager(), "Bulb");
+        this.mDialogEnabled = true;
+    }
+
+    @Override
+    public void onBulbDialogFragmentDestroyed() {
+        this.mDialogEnabled = false;
+    }
+
+    @Override
+    public void onTurnOnButtonTouched() {
+        // TODO: connect it
+    }
+
+    @Override
+    public void onTurnOffButtonTouched() {
+        // TODO: connect it
+    }
+
+    @Override
+    public void onChangeColorWhiteButtonTouched() {
+        // TODO: connect it
+    }
+
+    @Override
+    public void onChangeColorRedButtonTouched() {
+        // TODO: connect it
+    }
+
+    @Override
+    public void onChangeColorGreenButtonTouched() {
+        // TODO: connect it
+    }
+
+    @Override
+    public void onChangeColorBlueButtonTouched() {
+        // TODO: connect it
+    }
+    /***************/
 }

@@ -193,7 +193,8 @@
 
             </LinearLayout>
 
-            <SurfaceView
+            <kr.ac.skku.nyx.movinggateway.RVCSurfaceView
+                android:id="@+id/rvc_surface_view"
                 android:layout_width="match_parent"
                 android:layout_height="304dp" />
 
