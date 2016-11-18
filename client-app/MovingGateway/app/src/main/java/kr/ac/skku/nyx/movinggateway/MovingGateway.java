@@ -14,6 +14,9 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +31,7 @@ public class MovingGateway {
     private Handler mHandler;
     private boolean mIsConnect;
     private PrintWriter mPrintWriter;
-    private JSONObject jsonObject;
+    private HashMap<String, Resource> mResMap;
     public Position pos;
 
     MovingGateway(Handler handler) {
@@ -36,11 +39,13 @@ public class MovingGateway {
         mHandler = handler;
         mSocket = null;
         pos = new Position();
+        mResMap = new HashMap<String, Resource>();
     }
 
     public class Position {
         public float x;
         public float y;
+        public float q;
 
         Position (float x, float y) {
             this.x = x;
@@ -52,23 +57,11 @@ public class MovingGateway {
         }
     }
     public class Resource {
-        private int model_id;
-
-        private Map<String, String> attr;
-
-        public int getResourceId() {
-            return model_id;
-        }
-        public void setResourceId(int res_id) {
-            this.model_id = res_id;
-        }
-
-        public Map<String, String> getAttribute() {
-            return attr;
-        }
-        public void setAttribute(Map<String, String> attr) {
-            this.attr = attr;
-        }
+        public String unique_id;
+        public int rgb;
+        public int power;
+        public float x;
+        public float y;
     }
 
     public boolean isConnected() {
@@ -78,6 +71,10 @@ public class MovingGateway {
         void onFoundResource(Resource res);
         void onGetResource(String json_rep);
         void onPutResource(String json_rep);
+    }
+
+    public Resource getResource(String id) {
+        return mResMap.get(id);
     }
     public void setOnResourceEventListener(OnResourceEventListener onResourceEventListener) {
 
@@ -178,12 +175,43 @@ public class MovingGateway {
         try {
             reader = new JSONObject(str);
 
-            JSONObject posVal = reader.getJSONObject("position");
-            double x = posVal.getDouble("x");
-            double y = posVal.getDouble("y");
+            if (reader.has("position")) {
+                JSONObject posVal = reader.getJSONObject("position");
+                double x = posVal.getDouble("x");
+                double y = posVal.getDouble("y");
+                double q = posVal.getDouble("q");
 
-            pos.x = (float) x;
-            pos.y = (float) y;
+                pos.x = (float) x;
+                pos.y = (float) y;
+                pos.q = (float) q;
+            }
+            else if (reader.has("resource")) {
+                JSONObject obj = reader.getJSONObject("resource");
+
+                String res_name = obj.getString("id");
+                int power = obj.getInt("power");
+                int rgb = obj.getInt("rgb");
+                float x = (float)obj.getDouble("x");
+                float y = (float)obj.getDouble("y");
+
+                if(mResMap.get(res_name) == null) {
+                    Resource res = new Resource();
+                    res.power = power;
+                    res.rgb = rgb;
+                    res.unique_id = res_name;
+                    res.x = x;
+                    res.y = y;
+
+                    mResMap.put(res_name,res);
+                }
+                else {
+                    Resource res = mResMap.get(res_name);
+                    res.power = power;
+                    res.rgb = rgb;
+                    res.x = x;
+                    res.y = y;
+                }
+            }
 
             mHandler.sendEmptyMessage(UPDATE_SCREEN);
         } catch (JSONException e) {

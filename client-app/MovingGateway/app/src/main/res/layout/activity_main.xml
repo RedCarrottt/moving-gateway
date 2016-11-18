@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/mv_btn"
                     android:tag="{\&quot;control\&quot;:0,\&quot;position\&quot;:{\&quot;x\&quot;:%s,\&quot;y\&quot;:%s}}"
-                 android:layout_weight="0.4"
+                    android:layout_weight="0.4"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/button_event"
                     android:textColor="@android:color/white" />
@@ -193,9 +193,12 @@
 
             </LinearLayout>
 
-            <SurfaceView
+            <kr.ac.skku.nyx.movinggateway.RVCSurfaceView
+                android:id="@+id/rvc_surface_view"
                 android:layout_width="match_parent"
-                android:layout_height="304dp" />
+                android:layout_height="304dp"
+                android:tag="{\&quot;resource\&quot;:{\&quot;id\&quot;:\&quot;%s\&quot;,\&quot;rgb\&quot;:%x,\&quot;power\&quot;:%d}}"
+              />
 
             <LinearLayout
                 android:orientation="horizontal"
