@@ -296,7 +296,7 @@ public class RVCSurfaceView extends View {
                     Log.d(TAG, "Bulb " + i + " (" + criteriaXMin + ", " + criteriaYMin + ") ~ ("
                             + criteriaXMax + ", " + criteriaYMax + ")");
                     if (x >= criteriaXMin && x <= criteriaXMax
-                            && y >= citeriaYMin && y <= criteriaYMax) {
+                            && y >= criteriaYMin && y <= criteriaYMax) {
                         Log.d(TAG, "Bulb " + i + " is touched!");
                         if (mOnBulbTouchedListener != null) {
                             mOnBulbTouchedListener.onBulbTouched(i);
