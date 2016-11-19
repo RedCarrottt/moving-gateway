@@ -12,3 +12,5 @@ Moving Gateway(MGW) is a project that move around the home through RVC(Robot Vac
 * client-app: MGW client application
 * server-service: MGW server service
 * signals: Signal observatory and signal lighthouse
+
+![Moving Gateway Client Application](rvc_app.jpeg)
